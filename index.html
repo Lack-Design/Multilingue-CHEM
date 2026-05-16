@@ -9,7 +9,7 @@
             --primary: #EE4423; /* L'orange vif de votre logo */
             --dark-grey: #242424; /* Le gris anthracite de LACK */
             --light-grey: #5A5A5A; /* Le texte secondaire */
-            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-bg: rgba(255, 255, 255, 0.95);
             --border: #e0e0e0;
         }
         body {
@@ -31,7 +31,7 @@
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.25);
             z-index: -1;
         }
         .quiz-container {
@@ -51,7 +51,7 @@
             text-align: center;
         }
         .logo-container img {
-            max-width: 160px;
+            max-width: 180px;
             height: auto;
         }
         .step { display: none; }
@@ -64,30 +64,34 @@
             letter-spacing: -0.3px;
             line-height: 1.4;
             text-align: left;
+            margin-bottom: 25px;
         }
-        .btn-container { display: flex; flex-direction: column; gap: 14px; margin-top: 25px; }
-        button {
-            background: #ffffff;
-            border: 1px solid var(--border);
-            padding: 16px 22px;
+        .btn-container { display: flex; flex-direction: column; gap: 14px; }
+        
+        /* BOUTONS DES QUESTIONS (ORANGE LACK DESIGN) */
+        button.choice-btn {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 18px 22px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
             text-align: left;
             transition: all 0.2s ease-in-out;
-            font-weight: 500;
-            color: var(--dark-grey);
+            font-weight: 600;
             line-height: 1.4;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 10px rgba(238, 68, 35, 0.2);
         }
-        button:hover {
-            border-color: var(--primary);
-            background-color: #ffffff;
+        button.choice-btn:hover {
+            background: #d63615; 
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(238, 68, 35, 0.1);
+            box-shadow: 0 6px 15px rgba(238, 68, 35, 0.35);
         }
+        
+        /* BOUTON RESTER SUR LE FORMULAIRE FINAL */
         .btn-next {
-            background: var(--primary);
+            background: var(--dark-grey);
             color: #ffffff;
             text-align: center;
             border: none;
@@ -97,15 +101,16 @@
             letter-spacing: 0.5px;
             padding: 16px;
             font-size: 16px;
-            box-shadow: 0 4px 15px rgba(238, 68, 35, 0.3);
+            border-radius: 8px;
+            transition: all 0.2s;
+            cursor: pointer;
         }
         .btn-next:hover { 
-            background: #d63615; 
+            background: #111111;
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(238, 68, 35, 0.4);
         }
         .price-tag {
-            font-size: 42px;
+            font-size: 46px;
             font-weight: 700;
             color: var(--primary);
             margin: 20px 0;
@@ -115,6 +120,10 @@
             text-align: left;
             font-size: 15px;
             color: var(--dark-grey);
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 4px solid var(--primary);
+            border-radius: 4px;
         }
         .input-field {
             width: 100%;
@@ -142,17 +151,17 @@
     <div class="step active" id="step1">
         <h2 id="q1-text">...</h2>
         <div class="btn-container">
-            <button id="q1-optA" onclick="nextStep(2, 'A')">...</button>
-            <button id="q1-optB" onclick="nextStep(2, 'B')">...</button>
+            <button class="choice-btn" id="q1-optA" onclick="nextStep(2, 'A')">...</button>
+            <button class="choice-btn" id="q1-optB" onclick="nextStep(2, 'B')">...</button>
         </div>
     </div>
 
     <div class="step" id="step2">
         <h2 id="q2-text">...</h2>
         <div class="btn-container">
-            <button id="q2-optA" onclick="nextStep(3)">...</button>
-            <button id="q2-optB" onclick="nextStep(3)">...</button>
-            <button id="q2-optC" onclick="nextStep(3)">...</button>
+            <button class="choice-btn" id="q2-optA" onclick="nextStep(3)">...</button>
+            <button class="choice-btn" id="q2-optB" onclick="nextStep(3)">...</button>
+            <button class="choice-btn" id="q2-optC" onclick="nextStep(3)">...</button>
         </div>
     </div>
 
@@ -205,7 +214,7 @@
             profileB: "Sie gehen von einer Skizze aus. Lack Design übernimmt die komplette Raummodellierung und die Erstellung der visuellen Welt von A bis Z."
         },
         it: {
-            q1: "Tecnicamente, pianificare un progetto di camino richiede già ore. Al momento di presentarlo al cliente, qual è la vostra situazione ?",
+            q1: "Tecnicamente, pianificare un progetto di camino richiede già ore. Al moment di presentarlo al cliente, qual è la vostra situazione ?",
             q1A: "Ho i disegni o file tecnici (DWG, DXF, SKP...), ma non ho il tempo o la voglia di gestire la messa in scena e il rendering fotorealistico.",
             q1B: "Faccio ancora i miei progetti e le mie presentazioni a mano, d'istinto, o parto spesso da zero.",
             q2: "Per trasformare i vostri concetti in visivi di alto livello, come gestite questo carico attualmente ?",
@@ -215,7 +224,7 @@
             rTitle: "La vostra soluzione Lack Design",
             rInclusion: "Incluso: 3 viste fotorealistiche, presentazione con i colori della vostra azienda, PDF pronto da inviare, 2 fasi di modifica.",
             formLabel: "Inserisci la tua e-mail per ricevere questa proposta o pianificare un test:",
-            formBtn: "Testare il servizio su un progetto",
+            formBtn: "Testare il servizio su un projetto",
             profileA: "Avete già la base tecnica. Lack Design interviene solo per sublimare il vostro lavoro: applicheremo la decorazione, le trame e la luce direttamente sui vostri file esistenti.",
             profileB: "Si parte da un concetto o da uno schizzo. Lack Design si occupa della modellazione completa dello spazio, dell'integrazione delle quote di base e della creazione dell'universo visivo da A a Z."
         }
