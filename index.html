@@ -6,10 +6,11 @@
     <title>Lack Design - Selection Guide</title>
     <style>
         :root {
-            --primary: #111111;
-            --text: #222222;
-            --card-bg: rgba(255, 255, 255, 0.92);
-            --border: #e5e5e5;
+            --primary: #EE4423; /* L'orange vif de votre logo */
+            --dark-grey: #242424; /* Le gris anthracite de LACK */
+            --light-grey: #5A5A5A; /* Le texte secondaire */
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --border: #e0e0e0;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -17,7 +18,7 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            color: var(--text);
+            color: var(--dark-grey);
             line-height: 1.6;
             margin: 0;
             padding: 20px;
@@ -30,59 +31,90 @@
             content: '';
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.15);
+            background: rgba(0, 0, 0, 0.2);
             z-index: -1;
         }
         .quiz-container {
             background: var(--card-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             max-width: 550px;
             width: 100%;
             padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             box-sizing: border-box;
+            text-align: center;
+        }
+        .logo-container {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .logo-container img {
+            max-width: 160px;
+            height: auto;
         }
         .step { display: none; }
         .step.active { display: block; }
-        h2 { margin-top: 0; font-weight: 600; color: var(--primary); font-size: 21px; letter-spacing: -0.5px; }
-        .btn-container { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+        h2 { 
+            margin-top: 0; 
+            font-weight: 600; 
+            color: var(--dark-grey); 
+            font-size: 20px; 
+            letter-spacing: -0.3px;
+            line-height: 1.4;
+            text-align: left;
+        }
+        .btn-container { display: flex; flex-direction: column; gap: 14px; margin-top: 25px; }
         button {
             background: #ffffff;
             border: 1px solid var(--border);
-            padding: 16px 20px;
+            padding: 16px 22px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
             text-align: left;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
             font-weight: 500;
-            color: var(--text);
+            color: var(--dark-grey);
             line-height: 1.4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
         button:hover {
             border-color: var(--primary);
-            background-color: #fbfbfb;
-            transform: translateY(-1px);
+            background-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(238, 68, 35, 0.1);
         }
         .btn-next {
             background: var(--primary);
             color: #ffffff;
             text-align: center;
             border: none;
-            margin-top: 20px;
+            margin-top: 25px;
             font-weight: 600;
             width: 100%;
             letter-spacing: 0.5px;
+            padding: 16px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(238, 68, 35, 0.3);
         }
-        .btn-next:hover { background: #333333; }
+        .btn-next:hover { 
+            background: #d63615; 
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(238, 68, 35, 0.4);
+        }
         .price-tag {
-            font-size: 36px;
+            font-size: 42px;
             font-weight: 700;
             color: var(--primary);
             margin: 20px 0;
             letter-spacing: -1px;
+        }
+        .result-p {
+            text-align: left;
+            font-size: 15px;
+            color: var(--dark-grey);
         }
         .input-field {
             width: 100%;
@@ -92,12 +124,21 @@
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 15px;
+            background: #ffffff;
+        }
+        .input-field:focus {
+            border-color: var(--primary);
+            outline: none;
         }
     </style>
 </head>
 <body>
 
 <div class="quiz-container">
+    <div class="logo-container">
+        <img src="logo Lack Design Plain.svg" alt="Lack Design Logo">
+    </div>
+
     <div class="step active" id="step1">
         <h2 id="q1-text">...</h2>
         <div class="btn-container">
@@ -116,15 +157,15 @@
     </div>
 
     <div class="step" id="step3">
-        <h2 id="r-title">...</h2>
-        <p id="result-text">...</p>
+        <h2 id="r-title" style="text-align: center; color: var(--primary);">...</h2>
+        <p id="result-text" class="result-p">...</p>
         <div class="price-tag" id="price-display">...</div>
-        <p id="r-inclusion" style="font-size: 14px; color: #555; font-weight: 500;">...</p>
+        <p id="r-inclusion" style="font-size: 14px; color: var(--light-grey); font-weight: 500;">...</p>
         
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 25px 0;">
         
-        <form action="mailto:info@lack-design.ch" method="GET" style="display: flex; flex-direction: column; gap: 10px;">
-            <label id="form-label" style="font-weight: 500; font-size: 15px;">...</label>
+        <form action="mailto:info@lack-design.ch" method="GET" style="display: flex; flex-direction: column; gap: 10px; text-align: left;">
+            <label id="form-label" style="font-weight: 500; font-size: 14px; color: var(--light-grey);">...</label>
             <input type="email" name="body" class="input-field" placeholder="votre@adresse.ch" required>
             <button type="submit" class="btn-next" id="form-btn">...</button>
         </form>
@@ -141,7 +182,7 @@
             q2A: "On essaie de le faire en interne, mais cela retire un collaborateur du terrain ou du suivi de chantier.",
             q2B: "On paie des licences ou un dessinateur à l'année, ce qui représente une charge fixe lourde.",
             q2C: "On aimerait le faire, mais on n'a ni les ressources internes ni le temps.",
-            rTitle: "Votre solution : Optimisation de Projet sans Charge Fixe",
+            rTitle: "Votre solution Lack Design",
             rInclusion: "Inclus : 3 vues photoréalistes, présentation aux couleurs de votre entreprise, PDF prêt à envoyer, 2 phases de modification.",
             formLabel: "Entrez votre adresse e-mail pour recevoir cette proposition par écrit ou planifier un premier test :",
             formBtn: "Tester le service sur un projet",
@@ -156,7 +197,7 @@
             q2A: "Wir versuchen es intern zu lösen, aber das zieht Mitarbeiter von der Baustelle ab.",
             q2B: "Wir zahlen teure Software-Lizenzen oder einen internen Zeichner, was hohe Fixkosten verursacht.",
             q2C: "Wir würden es gerne tun, haben aber weder die internen Ressourcen noch die Zeit.",
-            rTitle: "Ihre Lösung: Projektoptimierung ohne Fixkosten",
+            rTitle: "Ihre Lack Design Lösung",
             rInclusion: "Inklusive: 3 fotorealistische Ansichten, Präsentation in Ihren Unternehmensfarben, druckfertiges PDF, 2 Änderungsphasen.",
             formLabel: "Geben Sie Ihre E-Mail-Adresse ein, um dieses Angebot schriftlich zu erhalten oder einen Test zu planen:",
             formBtn: "Service an einem Projekt testen",
@@ -164,14 +205,14 @@
             profileB: "Sie gehen von einer Skizze aus. Lack Design übernimmt die komplette Raummodellierung und die Erstellung der visuellen Welt von A bis Z."
         },
         it: {
-            q1: "Tecnicamente, pianificare un progetto di camino richiede già ore. Al moment di presentarlo al cliente, qual è la vostra situazione ?",
+            q1: "Tecnicamente, pianificare un progetto di camino richiede già ore. Al momento di presentarlo al cliente, qual è la vostra situazione ?",
             q1A: "Ho i disegni o file tecnici (DWG, DXF, SKP...), ma non ho il tempo o la voglia di gestire la messa in scena e il rendering fotorealistico.",
             q1B: "Faccio ancora i miei progetti e le mie presentazioni a mano, d'istinto, o parto spesso da zero.",
             q2: "Per trasformare i vostri concetti in visivi di alto livello, come gestite questo carico attualmente ?",
             q2A: "Proviamo a farlo internamente, ma questo toglie un collaboratore dal campo o dal monitoraggio del cantiere.",
             q2B: "Paghiamo licenze o un disegnatore all'anno, il che rappresenta un pesante costo fisso.",
             q2C: "Vorremmo farlo, ma non abbiamo né le risorse interne né il tempo.",
-            rTitle: "La vostra soluzione: Ottimizzazione del progetto senza costi fissi",
+            rTitle: "La vostra soluzione Lack Design",
             rInclusion: "Incluso: 3 viste fotorealistiche, presentazione con i colori della vostra azienda, PDF pronto da inviare, 2 fasi di modifica.",
             formLabel: "Inserisci la tua e-mail per ricevere questa proposta o pianificare un test:",
             formBtn: "Testare il servizio su un progetto",
