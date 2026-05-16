@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr-CH">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lack Design - Selection Guide</title>
+    <style>
+        :root {
+            --primary: #222;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #333;
+            --accent: #007bff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .quiz-container {
+            background: var(--card-bg);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .step { display: none; }
+        .step.active { display: block; }
+        h2 { margin-top: 0; font-weight: 600; color: var(--primary); font-size: 22px; }
+        .btn-container { display: flex; flex-direction: column; gap: 12px; margin-top: 25px; }
+        button {
+            background: #fff;
+            border: 2px solid #eaeaea;
+            padding: 15px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: left;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        button:hover {
+            border-color: var(--primary);
+            background-color: #fafafa;
+        }
+        .btn-next {
+            background: var(--primary);
+            color: #fff;
+            text-align: center;
+            border: none;
+            margin-top: 20px;
+            font-weight: bold;
+            width: 100%;
+        }
+        .btn-next:hover { background: #444; }
+        .price-tag {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 2px solid #eaeaea;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="step active" id="step1">
+        <h2 id="q1-text">...</h2>
+        <div class="btn-container">
+            <button id="q1-optA" onclick="nextStep(2, 'A')">...</button>
+            <button id="q1-optB" onclick="nextStep(2, 'B')">...</button>
+        </div>
+    </div>
+
+    <div class="step" id="step2">
+        <h2 id="q2-text">...</h2>
+        <div class="btn-container">
+            <button id="q2-optA" onclick="nextStep(3)">...</button>
+            <button id="q2-optB" onclick="nextStep(3)">...</button>
+            <button id="q2-optC" onclick="nextStep(3)">...</button>
+        </div>
+    </div>
+
+    <div class="step" id="step3">
+        <h2 id="q3-text">...</h2>
+        <div class="btn-container">
+            <button id="q3-optA" onclick="nextStep(4)">...</button>
+            <button id="q3-optB" onclick="nextStep(4)">...</button>
+            <button id="q3-optC" onclick="nextStep(4)">...</button>
+        </div>
+    </div>
+
+    <div class="step" id="step4">
+        <h2 id="r-title">...</h2>
+        <p id="result-text">...</p>
+        <div class="price-tag" id="price-display">...</div>
+        <p id="r-inclusion" style="font-size: 14px; color: #666;">...</p>
+        
+        <hr style="border: 0; border-top: 1px solid #eaeaea; margin: 25px 0;">
+        
+        <form action="mailto:info@lack-design.ch" method="GET" style="display: flex; flex-direction: column; gap: 10px;">
+            <label id="form-label" style="font-weight: 500;">...</label>
+            <input type="email" name="body" class="input-field" placeholder="votre@adresse.ch" required>
+            <button type="submit" class="btn-next" id="form-btn">...</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 1. LES TRADUCTIONS (Le contenu)
+    const translations = {
+        fr: {
+            q1: "Techniquement, caler un projet de cheminée sur logiciel vous prend déjà des heures. Au moment de présenter le projet au client, quelle est votre situation ?",
+            q1A: "J'ai les dessins ou fichiers techniques (DWG, DXF, SKP...), mais pas le temps ou l'envie de gérer la mise en scène et le rendu photoréaliste.",
+            q1B: "Je fais encore mes projets et mes présentations à la main, à l'instinct, ou je pars souvent de zéro.",
+            q2: "Pour transformer vos concepts en visuels de haut niveau, comment gérez-vous cette charge actuellement ?",
+            q2A: "On essaie de le faire en interne, mais cela retire un collaborateur du terrain ou du suivi de chantier.",
+            q2B: "On paie des licences ou un dessinateur à l'année, ce qui représente une charge fixe lourde.",
+            q2C: "On aimerait le faire, mais on n'a ni les ressources internes ni le temps.",
+            q3: "Quel univers visuel vos clients demandent-ils le plus souvent ?",
+            q3A: "Lumière du jour, blanc lumineux (Ultra Photoreal)",
+            q3B: "Ambiance chaleureuse, feu crépitant (Premium Balanced)",
+            q3C: "Lumière naturelle, tons gris, épuré (Architectural)",
+            rTitle: "Votre solution : Optimisation de Projet sans Charge Fixe",
+            rInclusion: "Inclus : 3 vues photoréalistes, présentation aux couleurs de votre entreprise, PDF prêt à envoyer, 2 phases de modification.",
+            formLabel: "Entrez votre adresse e-mail pour recevoir cette proposition par écrit ou planifier un test :",
+            formBtn: "Tester le service sur un projet",
+            profileA: "Vous possédez déjà la base technique. Lack Design intervient uniquement pour sublimer votre travail : nous prompterons la décoration, les textures et la lumière directement sur vos fichiers.",
+            profileB: "Vous partez d'un concept ou d'un croquis. Lack Design prend en charge la modélisation complète de l'espace, l'intégration des cotes basiques et la création de l'univers visuel de A à Z."
+        },
+        de: {
+            q1: "Die technische Planung eines Cheminée-Projekts kostet Sie bereits Stunden. Wie präsentieren Sie das Projekt Ihrem Kunden ?",
+            q1A: "Ich habe die technischen Zeichnungen (DWG, DXF, SKP...), aber keine Zeit für die fotorealistische Inszenierung.",
+            q1B: "Ich zeichne meine Projekte noch von Hand oder fange oft bei Null an.",
+            q2: "Wie bewältigen Sie derzeit diesen Aufwand für High-End-Visualisierungen ?",
+            q2A: "Wir versuchen es intern zu lösen, aber das zieht Mitarbeiter von der Baustelle ab.",
+            q2B: "Wir zahlen teure Software-Lizenzen oder einen internen Zeichner, was hohe Fixkosten verursacht.",
+            q2C: "Wir würden es gerne tun, haben aber weder die internen Ressourcen noch die Zeit.",
+            q3: "Welche visuelle Welt wünschen sich Ihre Kunden am meisten ?",
+            q3A: "Tageslicht, helles Weiss (Ultra Photoreal)",
+            q3B: "Warme Atmosphäre, knisterndes Feuer (Premium Balanced)",
+            q3C: "Natürliches Licht, Grautöne, puristisch (Architectural)",
+            rTitle: "Ihre Lösung: Projektoptimierung ohne Fixkosten",
+            rInclusion: "Inklusive: 3 fotorealistische Ansichten, Präsentation in Ihren Unternehmensfarben, druckfertiges PDF, 2 Änderungsphasen.",
+            formLabel: "Geben Sie Ihre E-Mail-Adresse ein, um dieses Angebot schriftlich zu erhalten oder einen Test zu planen:",
+            formBtn: "Service an einem Projekt testen",
+            profileA: "Sie haben bereits die technische Basis. Lack Design greift ein, um Ihre Arbeit zu veredeln: Wir fügen Dekoration, Texturen und Licht direkt in Ihre Dateien ein.",
+            profileB: "Sie gehen von einer Skizze aus. Lack Design übernimmt die komplette Raummodellierung und die Erstellung der visuellen Welt von A bis Z."
+        },
+        it: {
+            // L'italien sera configuré exactement de la même manière dès que vous validerez les textes
+            q1: "Tecnicamente, pianificare un progetto di camino richiede già ore. Al momento di presentarlo al cliente, qual è la vostra situazione ?",
+            q1A: "[Traduction à affiner plus tard]",
+            q1B: "[Traduction à affiner plus tard]",
+            q2: "[A remplir plus tard]", q2A: "[A remplir]", q2B: "[A remplir]", q2C: "[A remplir]",
+            q3: "[A remplir]", q3A: "[A remplir]", q3B: "[A remplir]", q3C: "[A remplir]",
+            rTitle: "La vostra soluzione: Ottimizzazione del progetto senza costi fissi",
+            rInclusion: "Incluso: 3 viste fotorealistiche, presentazione con i colori della vostra azienda, PDF pronto da inviare, 2 fasi di modifica.",
+            formLabel: "Inserisci la tua e-mail per ricevere questa proposta o pianificare un test:",
+            formBtn: "Testare il servizio su un progetto",
+            profileA: "Avete già la base tecnica...",
+            profileB: "Si parte da un concetto o da uno schizzo..."
+        }
+    };
+
+    // 2. DÉTECTION DE LA LANGUE DU NAVIGATEUR (Par défaut 'fr' si pas trouvé)
+    let lang = navigator.language || navigator.userLanguage;
+    lang = lang.substring(0, 2); 
+    if (!translations[lang]) lang = 'fr'; 
+
+    let userProfile = 'A';
+
+    // 3. INJECTION DES TEXTES DANS LA BONNE LANGUE AU DÉMARRAGE
+    function initQuiz() {
+        document.getElementById('q1-text').innerText = translations[lang].q1;
+        document.getElementById('q1-optA').innerText = translations[lang].q1A;
+        document.getElementById('q1-optB').innerText = translations[lang].q1B;
+        
+        document.getElementById('q2-text').innerText = translations[lang].q2;
+        document.getElementById('q2-optA').innerText = translations[lang].q2A;
+        document.getElementById('q2-optB').innerText = translations[lang].q2B;
+        document.getElementById('q2-optC').innerText = translations[lang].q2C;
+        
+        document.getElementById('q3-text').innerText = translations[lang].q3;
+        document.getElementById('q3-optA').innerText = translations[lang].q3A;
+        document.getElementById('q3-optB').innerText = translations[lang].q3B;
+        document.getElementById('q3-optC').innerText = translations[lang].q3C;
+        
+        document.getElementById('r-title').innerText = translations[lang].rTitle;
+        document.getElementById('r-inclusion').innerText = translations[lang].rInclusion;
+        document.getElementById('form-label').innerText = translations[lang].formLabel;
+        document.getElementById('form-btn').innerText = translations[lang].formBtn;
+    }
+
+    function nextStep(stepNumber, profileValue) {
+        if (profileValue) userProfile = profileValue;
+        
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.getElementById('step' + stepNumber).classList.add('active');
+        
+        if (stepNumber === 4) {
+            const resultText = document.getElementById('result-text');
+            const priceDisplay = document.getElementById('price-display');
+            
+            if (userProfile === 'A') {
+                resultText.innerText = translations[lang].profileA;
+                priceDisplay.innerText = "CHF 150.-";
+            } else {
+                resultText.innerText = translations[lang].profileB;
+                priceDisplay.innerText = "CHF 250.-";
+            }
+        }
+    }
+
+    // Lancement automatique
+    initQuiz();
+</script>
+
+</body>
+</html>
